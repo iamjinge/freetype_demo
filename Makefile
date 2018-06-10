@@ -11,28 +11,11 @@ LIBS = -lfreetype \
 	-lpng16
 
 FS = ../freetype2/src/
+FO = ../freetype2/objs/.libs
 
-E1S = $(FS)autofit/autofit.c \
-	$(FS)base/basepic.c \
-	$(FS)base/ftapi.c \
-	$(FS)base/ftbase.c \
-	$(FS)base/ftbbox.c \
-	$(FS)base/ftbitmap.c \
-	$(FS)base/ftdbgmem.c \
-	$(FS)base/ftdebug.c \
-	$(FS)base/ftglyph.c \
-	$(FS)base/ftinit.c \
-	$(FS)base/ftpic.c \
-	$(FS)base/ftstroke.c \
-	$(FS)base/ftsynth.c \
-	$(FS)base/ftsystem.c \
-	$(FS)/cff/cff.c \
-	$(FS)/pshinter/pshinter.c \
-	$(FS)/psnames/psnames.c \
-	$(FS)/raster/raster.c \
-	$(FS)/sfnt/sfnt.c \
-	$(FS)/smooth/smooth.c \
-	$(FS)/truetype/truetype.c
+E1S = $(FS)*/*.c
+
+E1O = $(FO)*.o
 
 CC = gcc
 CXX = g++
@@ -43,15 +26,27 @@ output : ${objects}
 main.o : main.c
 	cc $(CFLAGS) -c main.c
 
-example1 : example1.c $(E1S)
+analyze : 
+	$(CC) -MM $(CFLAGS) \
+	example5.cpp
+
+example1 : example1.o
+	$(CC) -o example1 example1.o \
+	$(FO)/libfreetype.6.dylib
+
+example1.o : example1.c 
 	$(CC) -I../freetype2/include \
 	-I../freetype2/include/freetype \
 	-I../freetype2/include/freetype/config \
 	-I../freetype2/include/freetype/internal \
-	-o example example1.c $(E1S)
+	 -c example1.c
 
-example5 : example5.cpp
-	$(CXX) $(CFLAGS) $(LDFLAGS) $(LIBS) -o example5 example5.cpp
+example5 : example5.o
+	$(CXX) -o example5 example5.o \
+	$(FO)/libfreetype.6.dylib
+
+example5.o : example5.cpp
+	$(CXX) $(CFLAGS) -c example5.cpp
 
 .PHONY : clean
 clean :

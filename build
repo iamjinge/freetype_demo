@@ -1,1 +1,4 @@
 gcc -o output main.c -I /usr/local/include/freetype2/ -I /usr/local/include/ -I /usr/local/include/libpng16/ -L /usr/local/lib -lfreetype -lpng16
+
+./configure --host=arm-linux-androideabi --prefix=/opt/android-ext/ --without-zlib --with-png=no
+
