@@ -1,6 +1,8 @@
 gcc -o output main.c -I /usr/local/include/freetype2/ -I /usr/local/include/ -I /usr/local/include/libpng16/ -L /usr/local/lib -lfreetype -lpng16
 
-./configure --host=arm-linux-androideabi --prefix=/opt/android-ext/ --without-zlib --with-png=no
+./configure --host=arm-linux-androideabi --prefix=/freetype --without-zlib --with-png=no --with-harfbuzz=no
+make -j$(nproc)
+make install DESTDIR=$(pwd)
 
 /Users/elton/Library/Android/sdk/ndk-bundle/build/tools/make-standalone-toolchain.sh  --platform=android-21 --install-dir=toolchain--arc=arm --force
 
@@ -9,3 +11,5 @@ https://my.oschina.net/nkm/blog/111831
 https://en.wikibooks.org/wiki/OpenGL_Programming/Installation/Android_NDK#FreeType
 
 https://blog.linguofeng.com/archive/2014/04/27/android-freetype2.html
+
+https://android.googlesource.com/platform/external/freetype/+/f720f0dbcf012d6c984dbbefa0875ef9840458c6/Android.mk
