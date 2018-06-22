@@ -42,11 +42,25 @@ example1.o : example1.c
 	 -c example1.c
 
 example5 : example5.o
-	$(CXX) -o example5 example5.o \
-	$(FO)/libfreetype.6.dylib
+	$(CXX) $(LDFLAGS) $(LIBS) -o example5 example5.o
 
 example5.o : example5.cpp
 	$(CXX) $(CFLAGS) -c example5.cpp
+
+test : test.o
+	$(CC) $(LDFLAGS) $(LIBS) -o test test.o
+
+test.o : test.c
+	$(CC) $(CFLAGS) -c test.c
+
+example6 : example6.o
+	$(CXX) $(LDFLAGS) $(LIBS) -o example6 example6.o
+
+example6.o : example6.cpp
+	$(CXX) $(CFLAGS) -c example6.cpp
+
+filetest : filetest.c
+	$(CC) -o filetest filetest.c
 
 .PHONY : clean
 clean :
